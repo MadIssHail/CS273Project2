@@ -7,18 +7,18 @@ namespace CS273
 	template <class T>
 	class vector
 	{
-		int _size;
+	private:
+  	int _size;
 		int _capacity;
-	
-		static T * _data[];
+		T * _data[];
 
+  public:
 		vector<T>();
 		vector<T>(int capacity);
 		vector<T>(const vector& v);
 		~vector<T>();
 
 		T& operator=(vector other);
-
 		T& operator[](int index);
 
 		T& at(int index);
@@ -27,9 +27,7 @@ namespace CS273
 		int capacity();
 
 		void assign(int index, T element);
-
 		void insert(int index, T element);
-
 
 		void push_back(T element);
 		void pop_back();
