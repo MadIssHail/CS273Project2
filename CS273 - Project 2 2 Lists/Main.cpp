@@ -4,9 +4,9 @@
 
 void Sort(std::list<Address>& l1, std::list<Address>& l2);
 
-void Merge(std::list<Address> l1, std::list<Address> l2);
+void Merge(std::list<Address>& l1, std::list<Address>& l2);
 
-void Unique(std::list<Address> l1);
+void Unique(std::list<Address>& l1);
 
 void swap(Address &a, Address &b);
 
@@ -33,13 +33,24 @@ int main()
 	l2.push_back(Address("Eric Jen", "Whitworth Dr", "seattle", "WA", 99251, "ericjen2@gmail.com"));
 	l2.push_back(Address("Eric Jen", "Whitworth Dr", "spokane", "CA", 99251, "ericjen3@gmail.com"));
 
+	Sort(l1, l1);
+
 	for (std::list<Address>::iterator it = l1.begin(); it != l1.end(); ++it)
 	{
 		std::cout << *it << "\n";
 	}
-	std::cout << "out";
-	Sort(l1, l1);
-	Sort(l1, l1);
+
+	std::cout << "Merge" << "\n";
+	Merge(l1, l2);
+
+	for (std::list<Address>::iterator it = l1.begin(); it != l1.end(); ++it)
+	{
+		std::cout << *it << "\n";
+	}
+
+	//Sort(l1, l1);
+	std::cout << "Unique" << "\n";
+	Unique(l1);
 
 	for (std::list<Address>::iterator it = l1.begin(); it != l1.end(); ++it)
 	{
@@ -66,32 +77,40 @@ void Sort(std::list<Address>& l1, std::list<Address>& l2)
 				sorted = false;
 			}
 		}
-		for (std::list<Address>::iterator it = l1.begin(); it != l1.end(); ++it)
-		{
-			std::cout << *it << "\n";
-		}
 	}
 	std::cout << "out3" << "\n";
 }
 
-void Merge(std::list<Address> l1, std::list<Address> l2)
+void Merge(std::list<Address>& l1, std::list<Address>& l2)
 {
 	while (!l2.empty())
 	{
 		l1.push_back(l2.front());
-		l2.pop_back();
+		l2.pop_front();
 	}
 }
 
-void Unique(std::list<Address> l1)
+void Unique(std::list<Address>& l1)
 {
-	for (std::list<Address>::iterator it = l1.begin(); it != l1.end(); ++it)
+	bool duplicates = true;
+	std::list<Address>::iterator a;
+	std::list<Address>::iterator b;
+
+	while (duplicates)
 	{
-		for (std::list<Address>::iterator it2 = it; it2 != l1.end(); ++it2)
+		duplicates = false;
+		for (a = l1.begin(); a != --l1.end(); ++a)
 		{
-			if (it == it2)
-			{
-				l1.erase(it2);
+			b = ++a;
+			--a;
+			while(b != l1.end()) {
+				if (*a == *b)
+				{
+					l1.erase(b);
+					duplicates = true;
+					
+				}
+				++b;
 			}
 		}
 	}
