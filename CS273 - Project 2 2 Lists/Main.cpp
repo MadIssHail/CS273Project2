@@ -2,15 +2,29 @@
 #include <list>
 #include "Address.h"
 
+// Sorts the elements of a list by state, city, then name. Utilizes the > operator
+// PRE: Takes in a list with address elements
+// POST: Returns a list sorted using overload operators
 void Sort(std::list<Address>& l1, std::list<Address>& l2);
 
+// Combines the data of two lists into the first
+// PRE: Takes in two different lists
+// POST: Returns one list, sorted
 void Merge(std::list<Address>& l1, std::list<Address>& l2);
 
+// Deletes duplicate elements in a list. Utilizes the = operator 
+// PRE: Checks name, state, and city for equals conditions
+// POST: A new list is returned, this time without duplicates
 void Unique(std::list<Address>& l1);
 
+// Function utilized in Sort to swap the data of two Addresses in the list
+// PRE: Takes in two addresses
+// POST: Returns the addresses in the correct list order
 void swap(Address &a, Address &b);
 
-
+// Overload ostream operator to returned the to_string() of our Address list
+// PRE: Takes in an address being outputted to the compiler
+// POST: Returns a formatted version of our member data
 std::ostream & operator<<(std::ostream & os, Address c)
 {
 	os << c.to_string();
@@ -48,7 +62,6 @@ int main()
 		std::cout << *it << "\n";
 	}
 
-	//Sort(l1, l1);
 	std::cout << "Unique" << "\n";
 	Unique(l1);
 
@@ -88,33 +101,21 @@ void Merge(std::list<Address>& l1, std::list<Address>& l2)
 		l1.push_back(l2.front());
 		l2.pop_front();
 	}
+	Sort(l1, l2);
 }
 
 void Unique(std::list<Address>& l1)
 {
-	bool duplicates = true;
-	std::list<Address>::iterator a;
-	std::list<Address>::iterator b;
-
-	while (duplicates)
+	std::list<Address>::iterator it = ++l1.begin();
+	for (std::list<Address>::iterator it2 = l1.begin(); it2 != --l1.end(); ++it2)
 	{
-		duplicates = false;
-		for (a = l1.begin(); a != --l1.end(); ++a)
+		if (*it == *it2)
 		{
-			b = ++a;
-			--a;
-			while(b != l1.end()) {
-				if (*a == *b)
-				{
-					l1.erase(b);
-					duplicates = true;
-					
-				}
-				++b;
-			}
+			l1.erase(it2);
 		}
+		++it;
 	}
-}
+} //////////
 
 void swap(Address &a, Address &b)
 {

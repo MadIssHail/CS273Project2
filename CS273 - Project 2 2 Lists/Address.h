@@ -13,6 +13,7 @@ private:
 	std::string _name;
 	std::string _email;
 public:
+
 	Address() 
 	{
 		_name = "Jen Eric";
@@ -92,7 +93,6 @@ public:
 	{
 		return !this->operator==(a);
 	}
-
 
 	std::string get_name()
 	{
