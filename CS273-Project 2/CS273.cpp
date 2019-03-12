@@ -123,6 +123,7 @@ void CS273::vector<T>::pop_back()
 		("This vector is empty");
 	}
 	erase(_size - 1); //Call erase on the last element in the vector
+	_size--;
 }
 
 template <class T>
